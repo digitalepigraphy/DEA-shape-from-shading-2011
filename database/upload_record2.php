@@ -1,0 +1,1 @@
+<?phprequire("DEA_db.php");$session_id=$_POST['session_id'];$record_id=$_POST['record_id'];$field_id=$_POST['field_id'];$field_value=$_POST['field_value'];echo '<?xml version="1.0"?><record>';upload_record2($session_id, $record_id, $field_id, $field_value);echo '</record>';?>

@@ -1,0 +1,148 @@
+CREATE TABLE dea_sessions (
+         id CHAR(16) NOT NULL PRIMARY KEY,
+         ip VARCHAR(15) NOT NULL,
+	 user INT,
+         created DATETIME NOT NULL,
+	 updated DATETIME NOT NULL
+       )
+
+INSERT INTO dea_sessions (id,ip,created,updated) VALUES (substring(MD5(RAND()), -16),'0.0.0.0',NOW(),NOW()) ON DUPLICATE KEY UPDATE id=substring(MD5(RAND()), -16)
+
+
+CREATE TABLE dea_inscriptions (
+	id CHAR(16) NOT NULL PRIMARY KEY,
+	created_by_session_id CHAR(16) NOT NULL,
+        created DATETIME NOT NULL,
+	deleted_by_session_id CHAR(16),
+        deleted DATETIME
+)
+
+INSERT INTO dea_inscriptions (id,created_by_session_id,created) VALUES (substring(MD5(RAND()), -16),'sessionid',NOW()) ON DUPLICATE KEY UPDATE id=substring(MD5(RAND()), -16)
+
+INSERT INTO dea_inscriptions (id,created_by_session_id,created) VALUES('05e2729b149912bf','sessionid',NOW())
+
+CREATE TABLE dea_images (
+	id CHAR(16) NOT NULL PRIMARY KEY,
+	created_by_session_id CHAR(16) NOT NULL,
+        created DATETIME NOT NULL,
+	deleted_by_session_id CHAR(16),
+        deleted DATETIME,
+	url VARCHAR(256)
+)
+
+INSERT INTO dea_images (id,created_by_session_id,created) VALUES (substring(MD5(RAND()), -16),'sessionid',NOW()) ON DUPLICATE KEY UPDATE id=substring(MD5(RAND()), -16)
+
+CREATE TABLE dea_fields (
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	created_by_session_id CHAR(16) NOT NULL,
+        created DATETIME NOT NULL,
+	deleted_by_session_id CHAR(16),
+        deleted DATETIME,
+	name VARCHAR(128) NOT NULL,
+        type_id INT NOT NULL,
+		group_id INT NOT NULL,
+	ord INT,
+        description VARCHAR(256),
+        example VARCHAR(256)
+)
+
+CREATE TABLE dea_field_groups (
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	created_by_session_id CHAR(16) NOT NULL,
+        created DATETIME NOT NULL,
+	deleted_by_session_id CHAR(16),
+        deleted DATETIME,
+	name VARCHAR(128) NOT NULL,
+	ord INT
+)
+
+INSERT INTO dea_field_groups(id, created_by_session_id, created, name, ord) VALUES
+(1,'session_id', NOW(),'ID Numbers',1),
+(2,'session_id', NOW(),'Locations',2),
+(3,'session_id', NOW(),'Dates',3),
+(4,'session_id', NOW(),'Physical Description',4),
+(5,'session_id', NOW(),'Text Description',5),
+(6,'session_id', NOW(),'Bibliography',6)
+
+INSERT INTO dea_fields (id, created_by_session_id,created,name,type_id,group_id,ord,description, example) VALUES 
+(1,'session_id',NOW(),'CIL Number',0,1,1,'',''),
+(2,'session_id',NOW(),'IG Number',0,1,2,'',''),
+
+(3,'session_id',NOW(),'Province',0,2,3,'',''),
+(4,'session_id',NOW(),'Find spot (ancient name)',0,2,4,'',''),
+(5,'session_id',NOW(),'Modern country',0,2,5,'',''),
+(6,'session_id',NOW(),'Find spot (modern name)',0,2,6,'',''),
+(7,'session_id',NOW(),'Present location',0,2,7,'',''),
+
+(8,'session_id',NOW(),'Date',0,3,8,'',''),
+(9,'session_id',NOW(),'Year of find',0,3,9,'',''),
+
+(10,'session_id',NOW(),'State of preservation',0,4,10,'',''),
+(11,'session_id',NOW(),'Inscription Height',0,4,11,'',''),
+(12,'session_id',NOW(),'Inscription Width',0,4,12,'',''),
+(13,'session_id',NOW(),'Inscription Depth',0,4,13,'',''),
+(14,'session_id',NOW(),'Material',0,4,14,'',''),
+(15,'session_id',NOW(),'Inscription bearer',0,4,15,'',''),
+(16,'session_id',NOW(),'Letter height',0,4,16,'',''),
+(17,'session_id',NOW(),'Letter width',0,4,17,'',''),
+
+(18,'session_id',NOW(),'Inscription type',0,5,18,'','Funereal, Dedicatory'),
+(19,'session_id',NOW(),'Language',0,5,19,'',''),
+
+(20,'session_id',NOW(),'Publication',0,6,20,'',''),
+(21,'session_id',NOW(),'Title',0,6,21,'',''),
+(22,'session_id',NOW(),'Author',0,6,22,'',''),
+(23,'session_id',NOW(),'Volume',0,6,23,'',''),
+(24,'session_id',NOW(),'Year',0,6,24,'',''),
+(25,'session_id',NOW(),'TextURL',0,0,25,'',''),
+(1000,'session_id',NOW(),'Image',1,0,1000,'',''),
+(2000,'session_id',NOW(),'Object3D',2,0,2000,'','')
+
+
+
+CREATE TABLE dea_strings (
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	created_by_session_id CHAR(16) NOT NULL,
+        created DATETIME NOT NULL,
+	deleted_by_session_id CHAR(16),
+        deleted DATETIME,
+	value VARCHAR(256),
+        field_id INT NOT NULL,
+        inscription_id CHAR(16) NOT NULL
+)
+
+insert into dea_strings (created_by_session_id, created, value, field_id, inscription_id) VALUES 
+('session_id', NOW(), 'd1a7a25fdaf3010d', 2000, '05e2729b149912bf')
+
+insert into dea_strings (created_by_session_id, created, value, field_id, inscription_id) VALUES 
+('session_id', NOW(), 'd1a7a25fdaf3010e', 2000, 'ecc2041780a2342d')
+
+insert into dea_strings (created_by_session_id, created, value, field_id, inscription_id) VALUES 
+('session_id', NOW(), 'd1a7a25fdaf3010f', 2000, '4cad60b168aa1e01')
+
+
+INSERT INTO dea_strings (created_by_session_id, created, value, field_id, inscription_id) VALUES
+('session_id', NOW(), 'one', 1, '05e2729b149912bf'),
+('session_id', NOW(), 'two', 2, '05e2729b149912bf'),
+('session_id', NOW(), 'three', 3, '05e2729b149912bf')
+
+
+INSERT INTO dea_strings (created_by_session_id, created, value, field_id, inscription_id) VALUES
+('session_id', NOW(), 'one2', 1, '05e2729b149912bf'),
+('session_id', NOW(), 'four', 4, '05e2729b149912bf'),
+('session_id', NOW(), 'three3', 3, '05e2729b149912bf')
+
+CREATE TABLE dea_users (
+        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	email VARCHAR(50) NOT NULL,
+	name VARCHAR(50) NOT NULL,
+	prefix VARCHAR(10),
+	pass varchar(50) NOT NULL,
+	affiliation varchar(50),
+        created DATETIME,
+		created_by_session_id CHAR(16)
+       )
+	   
+INSERT INTO dea_users (created_by_session_id, created, email, prefix, name, affiliation, pass) VALUES
+('session_id', NOW(), 'angelos@digitalworlds.ufl.edu', 'Dr.', 'Angelos Barmpoutis', 'University of Florida', '1pass2me3'),
+('session_id', NOW(), 'bozia@ufl.edu', 'Dr.', 'Eleni Bozia', 'University of Florida', '1pass2me3')

@@ -1,0 +1,20 @@
+<?php
+
+echo '
+<?xml version="1.0"?>
+<company>
+	<staff>
+		<firstname>yong</firstname>
+		<lastname>mook kim</lastname>
+		<nickname>mkyong</nickname>
+		<salary>100000</salary>
+	</staff>
+	<staff>
+		<firstname>low</firstname>
+		<lastname>yin fong</lastname>
+		<nickname>fong fong</nickname>
+		<salary>200000</salary>
+	</staff>
+</company>';
+
+?>

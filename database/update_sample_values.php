@@ -1,0 +1,1 @@
+<?phprequire("DEA_db.php");get_all_sample_values();get_fields();get_field_groups();?>

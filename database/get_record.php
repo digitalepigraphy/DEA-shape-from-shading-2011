@@ -1,0 +1,1 @@
+<?phprequire("DEA_db.php");$session_id=$_POST['session_id'];$record_id=$_POST['record_id'];echo '<?xml version="1.0"?><record>';get_record($record_id);echo '</record>';?>
